@@ -1,0 +1,69 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PROG28_LEITURA.
+      *    PROGRAMA PARA LEITURA DE ARQUIVOS.
+
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT OPTIONAL ARQUIVO-CLIENTE
+           ASSIGN TO "clientes_2.dat"
+           ORGANIZATION IS SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD  ARQUIVO-CLIENTE.
+       01  CLIENTE-REGISTRO.
+           05 CLIENTE-NOME PIC X(20).
+           05 CLIENTE-IDADE PIC 99.
+           05 CLIENTE-CIDADE PIC X(30).
+           05 CLIENTE-ENDERECO PIC X(50).
+           05 CLIENTE-TELEFONE PIC X(15).
+           05 CLIENTE-EMAIL PIC X(30).
+
+       WORKING-STORAGE SECTION.
+
+       01  FINAL-ARQUIVO PIC X.
+
+       PROCEDURE DIVISION.
+       PROGRAM-BEGIN.
+           PERFORM LIMPA-TELA.
+           PERFORM CABECALHO.
+           OPEN INPUT ARQUIVO-CLIENTE.
+           MOVE "N" TO FINAL-ARQUIVO.
+      *    PERFORM LEIA-PROXIMO-REGISTRO.
+           PERFORM EXIBA-REGISTROS UNTIL FINAL-ARQUIVO = "S".
+
+           CLOSE ARQUIVO-CLIENTE.
+
+       PROGRAM-DONE.
+           STOP RUN.
+
+       LIMPA-TELA.
+           CALL "SYSTEM" USING "CLS".
+
+       CABECALHO.
+           DISPLAY "REGISTROS DO ARQUIVO CLIENTE".
+           DISPLAY "LISTA CLIENTES <= 25 ANOS.".
+           DISPLAY "==================================".
+           DISPLAY "".
+
+       LEIA-PROXIMO-REGISTRO.
+           READ ARQUIVO-CLIENTE RECORD AT END
+           MOVE "S" TO FINAL-ARQUIVO.
+
+       EXIBA-REGISTROS.
+           PERFORM LEIA-PROXIMO-REGISTRO.
+           IF FINAL-ARQUIVO NOT = "S"
+             PERFORM EXIBA-CAMPOS
+           END-IF.
+
+       EXIBA-CAMPOS.
+           IF CLIENTE-IDADE <= 25
+               DISPLAY "NOME     : " CLIENTE-NOME
+               DISPLAY "IDADE    : " CLIENTE-IDADE
+               DISPLAY "CIDADE   : " CLIENTE-CIDADE
+               DISPLAY "ENDERECO : " CLIENTE-ENDERECO
+               DISPLAY "TELEFONE : " CLIENTE-TELEFONE
+               DISPLAY "EMAIL    : " CLIENTE-EMAIL
+               DISPLAY "========================================"
+           END-IF.

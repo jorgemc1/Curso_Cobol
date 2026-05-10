@@ -1,0 +1,15 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PROG2.
+       ENVIRONMENT DIVISION.
+       DATA DIVISION.
+
+       PROCEDURE DIVISION.
+      * CONSTANTES NO PROGRAMA.
+
+       PROGRAM-BEGIN.
+           CALL "SYSTEM" USING "CLS".
+           DISPLAY "NUMEROS .....:".
+           DISPLAY "55".
+           DISPLAY "12.98789".
+       PROGRAM-DONE.
+           STOP RUN.

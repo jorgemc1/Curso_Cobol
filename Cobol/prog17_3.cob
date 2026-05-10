@@ -1,0 +1,41 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PROG17_2.
+      * PROGRAMA QUE CALCULA A TABUADA DE UM NÚMERO (1 A 99).
+      * Uso do PERFORM VARYING FROM UNTIL.
+       ENVIRONMENT DIVISION.
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01  NUMERO          PIC 9(2).
+       01  MULTIPLICADOR   PIC 9(3).
+       01  PRODUTO         PIC 9(4).
+       01  QUANTOS         PIC 9(2).
+
+       PROCEDURE DIVISION.
+       PROGRAM-BEGIN.
+      *    PERFORM INICIALIZACAO-PROGRAMA.
+           PERFORM PEGA-TABUADA.
+           PERFORM EXIBIR-TABUADA.
+       PROGRAM-DONE.
+           STOP RUN.
+
+      * INICIALIZACAO-PROGRAMA.
+      *     MOVE 0 TO MULTIPLICADOR.
+
+       PEGA-TABUADA.
+           CALL "SYSTEM" USING "CLS".
+           DISPLAY "Qual a tabuada do número (01-99)?".
+           ACCEPT NUMERO.
+           DISPLAY "Qual o tamanho da tabuada?".
+           ACCEPT QUANTOS.
+
+       EXIBIR-TABUADA.
+           DISPLAY " A TABUADA DE " NUMERO " É".
+           PERFORM CALCULA-E-EXIBE
+            VARYING MULTIPLICADOR
+               FROM 1 BY 1
+            UNTIL MULTIPLICADOR > QUANTOS.
+
+       CALCULA-E-EXIBE.
+           COMPUTE PRODUTO = NUMERO * MULTIPLICADOR.
+           DISPLAY
+            NUMERO " * " MULTIPLICADOR " = " PRODUTO.

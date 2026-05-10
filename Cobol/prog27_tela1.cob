@@ -1,0 +1,67 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PROG27_TELA1.
+      *     PROGRAMA PARA MANIPULAR ARQUIVOS.
+
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT OPTIONAL ARQUIVO-CLIENTE
+           ASSIGN TO "clientes3.dat"
+           ORGANIZATION IS SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD  ARQUIVO-CLIENTE.
+      *     LABEL RECORDS ARE STANDARD.
+       01  CLIENTE-REGISTRO.
+           05 CLIENTE-NOME PIC X(20).
+           05 CLIENTE-ENDERECO PIC X(50).
+           05 CLIENTE-TELEFONE PIC X(15).
+           05 CLIENTE-EMAIL PIC X(30).
+
+       WORKING-STORAGE SECTION.
+
+       01  RESPOSTA PIC X.
+
+       PROCEDURE DIVISION.
+       PROGRAM-BEGIN.
+
+           PERFORM LIMPA-TELA.
+
+           OPEN EXTEND ARQUIVO-CLIENTE.
+           MOVE "S" TO RESPOSTA.
+
+           PERFORM ADICIONA-REGISTROS
+                UNTIL RESPOSTA = "N".
+
+           CLOSE ARQUIVO-CLIENTE.
+
+       PROGRAM-DONE.
+           STOP RUN.
+       ADICIONA-REGISTROS.
+           MOVE SPACES TO CLIENTE-REGISTRO
+
+           PERFORM LIMPA-TELA.
+
+           DISPLAY "===========================" LINE 1 COLUMN 1
+           DISPLAY "CADASTRO DE CLIENTE" LINE 2 COLUMN 1
+           DISPLAY "+++++++++++++++++++++++++++" LINE 3 COLUMN 1
+           DISPLAY "NOME.......:" LINE 4 COLUMN 1
+           DISPLAY "ENDERECO...:" LINE 5 COLUMN 1
+           DISPLAY "TELEFONE...:" LINE 6 COLUMN 1
+           DISPLAY "EMAIL......:" LINE 7 COLUMN 1
+           DISPLAY "+++++++++++++++++++++++++++" LINE 8 COLUMN 1
+           DISPLAY "NOVO REGISTRO (S/N)...:" LINE 9 COLUMN 1
+           DISPLAY "===========================" LINE 10 COLUMN 1
+
+           ACCEPT CLIENTE-NOME LINE 4 COLUMN 14
+           ACCEPT CLIENTE-ENDERECO LINE 5 COLUMN 14
+           ACCEPT CLIENTE-TELEFONE LINE 6 COLUMN 14
+           ACCEPT CLIENTE-EMAIL LINE 7 COLUMN 14
+           ACCEPT RESPOSTA LINE 9 COLUMN 24
+
+           WRITE CLIENTE-REGISTRO
+           DISPLAY "-----------------------------" LINE 10 COLUMN 1.
+
+       LIMPA-TELA.
+           CALL "SYSTEM" USING "CLS".

@@ -1,0 +1,64 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PROG27_TELA3.
+
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT OPTIONAL ARQUIVO-CLIENTE
+           ASSIGN TO "clientes_3.dat"
+           ORGANIZATION IS SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD  ARQUIVO-CLIENTE.
+       01  CLIENTE-REGISTRO.
+           05 CLIENTE-NOME     PIC X(20).
+           05 CLIENTE-ENDERECO PIC X(50).
+           05 CLIENTE-TELEFONE PIC X(15).
+           05 CLIENTE-EMAIL    PIC X(30).
+
+       WORKING-STORAGE SECTION.
+       01  RESPOSTA           PIC X.
+
+      * Variáveis auxiliares para entrada de dados
+       01  ENTRADA-NOME       PIC X(20).
+       01  ENTRADA-ENDERECO   PIC X(50).
+       01  ENTRADA-TELEFONE   PIC X(15).
+       01  ENTRADA-EMAIL      PIC X(30).
+
+       SCREEN SECTION.
+       01  TELA-CADASTRO.
+           05 BLANK SCREEN.
+           05 LINE 1  COLUMN 20 VALUE "CADASTRO DE CLIENTE".
+           05 LINE 3  COLUMN 10 VALUE "NOME.......:".
+           05 LINE 3  COLUMN 25 PIC X(20) TO ENTRADA-NOME.
+           05 LINE 4  COLUMN 10 VALUE "ENDERECO...:".
+           05 LINE 4  COLUMN 25 PIC X(50) TO ENTRADA-ENDERECO.
+           05 LINE 5  COLUMN 10 VALUE "TELEFONE...:".
+           05 LINE 5  COLUMN 25 PIC X(15) TO ENTRADA-TELEFONE.
+           05 LINE 6  COLUMN 10 VALUE "EMAIL......:".
+           05 LINE 6  COLUMN 25 PIC X(30) TO ENTRADA-EMAIL.
+           05 LINE 8  COLUMN 10 VALUE "NOVO REGISTRO (S/N):".
+           05 LINE 8  COLUMN 35 PIC X TO RESPOSTA.
+
+       PROCEDURE DIVISION.
+       PROGRAM-BEGIN.
+
+           OPEN EXTEND ARQUIVO-CLIENTE
+           MOVE "S" TO RESPOSTA
+
+           PERFORM UNTIL RESPOSTA = "N"
+               DISPLAY TELA-CADASTRO
+               ACCEPT TELA-CADASTRO
+
+      * Copia os dados da tela para o registro do arquivo
+               MOVE ENTRADA-NOME     TO CLIENTE-NOME
+               MOVE ENTRADA-ENDERECO TO CLIENTE-ENDERECO
+               MOVE ENTRADA-TELEFONE TO CLIENTE-TELEFONE
+               MOVE ENTRADA-EMAIL    TO CLIENTE-EMAIL
+
+               WRITE CLIENTE-REGISTRO
+           END-PERFORM
+
+           CLOSE ARQUIVO-CLIENTE
+           STOP RUN.
