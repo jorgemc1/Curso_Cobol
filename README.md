@@ -16,8 +16,9 @@ $ ./prog1
 cobc -x -Wall -std=ibm programa.cob -o programa
 
 ## 📌 Resumo Comparativo de compilação
-Opção                     SEM -std        -std=ibm
-Flexibilidade              Alta            Menor
-Rigor do compilador        Médio           Alto
-Aproximação co mainframe   Baixa           Alta
 
+| Opção | SEM -std | -std=ibm |
+|---|---|---|
+| Flexibilidade | Alta | Menor |
+| Rigor do compilador | Médio | Alto |
+| Aproximação com mainframe | Baixa | Alta |
