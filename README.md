@@ -22,3 +22,7 @@ cobc -x -Wall -std=ibm programa.cob -o programa
 | Flexibilidade | Alta | Menor |
 | Rigor do compilador | Médio | Alto |
 | Aproximação com mainframe | Baixa | Alta |
+
+## Mais informações de Configurações
+
+[Acesse a documentação do curso](https://sites.google.com/view/fundamentos-cobol/)
