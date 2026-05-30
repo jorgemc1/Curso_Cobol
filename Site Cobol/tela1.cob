@@ -1,0 +1,62 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TELA1.
+      *    CRIAÇÃO DE TELAS PARA INTERAÇÃO COM O USUÁRIO.
+      *    USANDO O GNUCOBOL.
+      *    JOTA TREINAMENTOS. 10/10/2021.
+       ENVIRONMENT DIVISION.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+      *    VARIÁVEIS DO SISTEMA.
+       01  VAR-NOME      PIC X(20) VALUE SPACES.
+       01  VAR-IDADE-TXT PIC X(3)  VALUE SPACES.
+       01  VAR-IDADE     PIC 9(3)  VALUE ZEROS.
+       01  RESULT        PIC 9(3)  VALUE ZEROS.
+       01  MENSAGEM      PIC X(50) VALUE SPACES.
+
+       PROCEDURE DIVISION.
+       PROGRAM-BEGIN.
+           PERFORM LIMPA-TELA.
+           PERFORM ENTRADA-DADOS.
+           PERFORM TESTE-CALCULO.
+           PERFORM TERMINAR-PROGRAMA.
+       PROGRAM-DONE.
+           STOP RUN.
+
+       ENTRADA-DADOS.
+           DISPLAY "===========================" LINE 2 COLUMN 2
+           DISPLAY "=== VALIDAÇÃO DE IDADE  ===" LINE 3 COLUMN 3
+           DISPLAY "===========================" LINE 4 COLUMN 2
+           DISPLAY "ENTRE COM O NOME...:"        LINE 5 COLUMN 2
+            DISPLAY "ENTRE COM A IDADE..:"        LINE 6 COLUMN 2
+           DISPLAY "===========================" LINE 7 COLUMN 2
+
+           ACCEPT VAR-NOME                       LINE 5 COLUMN 24
+           ACCEPT VAR-IDADE-TXT                  LINE 6 COLUMN 24
+           DISPLAY "---------------------------" LINE 7 COLUMN 2.
+
+      *    CONVERTE UMA VARIÁVEL TIPO ALFA NUMÉRICA PARA NUMÉRICA.
+           MOVE FUNCTION NUMVAL(VAR-IDADE-TXT) TO VAR-IDADE.
+
+       LIMPA-TELA.
+           CALL "SYSTEM" USING "CLS".
+
+       TESTE-CALCULO.
+
+           IF VAR-IDADE < 18
+            MOVE "NAO PODE TIRAR HABILITACAO PARA VEICULOS." TO MENSAGEM
+           END-IF.
+
+           IF VAR-IDADE >= 18
+            MOVE "PODE TIRAR HABILITACAO PARA VEICULOS" TO MENSAGEM
+           END-IF.
+
+           DISPLAY "=======================" LINE 8 COLUMN 2.
+           DISPLAY "IDADE INFORMADA: " LINE 9 COLUMN 2.
+           DISPLAY VAR-IDADE LINE 9 COLUMN 20.
+
+           DISPLAY MENSAGEM LINE 10 COLUMN 2.
+
+       TERMINAR-PROGRAMA.
+           DISPLAY "Pressione ENTER para sair" LINE 12 COLUMN 2.
+           ACCEPT OMITTED LINE 14 COLUMN 2.

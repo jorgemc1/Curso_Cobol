@@ -1,0 +1,60 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. PROG_LER.
+      * PROGRAMA PARA LER DADOS DE ARQUIVO INDEXADO.
+      * E MOSTRAR NA TELA.
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT ARQUIVO-FUNCIONARIO
+           ASSIGN TO "funcionarios.dat"
+           ORGANIZATION IS INDEXED
+           RECORD KEY IS FUNCIONARIO-CODIGO
+           ACCESS MODE IS DYNAMIC.
+       DATA DIVISION.
+       FILE SECTION.
+       FD  ARQUIVO-FUNCIONARIO.
+       01  FUNCIONARIO-REGISTRO.
+           05 FUNCIONARIO-CODIGO PIC 9(4).
+           05 FUNCIONARIO-NOME PIC X(35).
+           05 FUNCIONARIO-ENDERECO PIC X(50).
+           05 FUNCIONARIO-TELEFONE PIC X(15).
+           05 FUNCIONARIO-EMAIL PIC X(30).
+
+       WORKING-STORAGE SECTION.
+       01  WS-FIM-ARQUIVO PIC X VALUE "N".
+
+       PROCEDURE DIVISION.
+       PROGRAM-BEGIN.
+           PERFORM LIMPAR-TELA.
+           OPEN INPUT ARQUIVO-FUNCIONARIO.
+           DISPLAY "==========================================".
+           DISPLAY " LISTAGEM DE FUNCIONÁRIOS".
+           DISPLAY "==========================================".
+
+           PERFORM LER-REGISTROS
+               UNTIL WS-FIM-ARQUIVO = "S"
+
+           CLOSE ARQUIVO-FUNCIONARIO.
+           PROGRAM-DONE.
+                STOP RUN.
+
+       LER-REGISTROS.
+           READ ARQUIVO-FUNCIONARIO NEXT RECORD
+               AT END
+                   MOVE "S" TO WS-FIM-ARQUIVO
+               NOT AT END
+                   PERFORM MOSTRAR-REGISTRO
+           END-READ.
+
+       MOSTRAR-REGISTRO.
+           DISPLAY "------------------------------------------"
+           DISPLAY "CÓDIGO    : " FUNCIONARIO-CODIGO
+           DISPLAY "NOME      : " FUNCIONARIO-NOME
+           DISPLAY "ENDEREÇO  : " FUNCIONARIO-ENDERECO
+           DISPLAY "TELEFONE  : " FUNCIONARIO-TELEFONE
+           DISPLAY "EMAIL     : " FUNCIONARIO-EMAIL.
+
+       LIMPAR-TELA.
+
+      * COMANDO PARA WINDOWS 10
+           CALL "SYSTEM" USING "CLS".

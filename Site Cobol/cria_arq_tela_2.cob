@@ -1,0 +1,63 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. CRIA_ARQ_TELA_2.
+      *    PROGRAMA PARA MANIPULAR ARQUIVOS.
+      *    USANDO A SCREEN SECTION PARA A CONSTRUÇÃO DA TELA.
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT OPTIONAL ARQUIVO-CLIENTE
+               ASSIGN TO "clientes.dat"
+               ORGANIZATION IS SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD  ARQUIVO-CLIENTE.
+       01  CLIENTE-REGISTRO.
+           05 CLIENTE-NOME     PIC X(20).
+           05 CLIENTE-ENDERECO PIC X(50).
+           05 CLIENTE-TELEFONE PIC X(15).
+           05 CLIENTE-EMAIL    PIC X(30).
+
+       WORKING-STORAGE SECTION.
+       01  RESPOSTA          PIC X.
+       01  FIM-PROGRAMA      PIC X VALUE "N".
+
+       SCREEN SECTION.
+       01 TELA-CADASTRO.
+           05 BLANK SCREEN.
+           05 LINE 1  COLUMN 1  VALUE "===========================".
+           05 LINE 2  COLUMN 2  VALUE "CADASTRO DE CLIENTE".
+           05 LINE 3  COLUMN 1  VALUE "+++++++++++++++++++++++++++".
+           05 LINE 4  COLUMN 1  VALUE "NOME.......:".
+           05 LINE 4  COLUMN 14 PIC X(20) USING CLIENTE-NOME.
+           05 LINE 5  COLUMN 1  VALUE "ENDERECO...:".
+           05 LINE 5  COLUMN 14 PIC X(50) USING CLIENTE-ENDERECO.
+           05 LINE 6  COLUMN 1  VALUE "TELEFONE...:".
+           05 LINE 6  COLUMN 14 PIC X(15) USING CLIENTE-TELEFONE.
+           05 LINE 7  COLUMN 1  VALUE "EMAIL......:".
+           05 LINE 7  COLUMN 14 PIC X(30) USING CLIENTE-EMAIL.
+           05 LINE 8  COLUMN 1  VALUE "+++++++++++++++++++++++++++".
+           05 LINE 9  COLUMN 1  VALUE "NOVO REGISTRO (S/N)...:".
+           05 LINE 9  COLUMN 26 PIC X USING RESPOSTA.
+           05 LINE 10 COLUMN 1  VALUE "===========================".
+
+       PROCEDURE DIVISION.
+       PROGRAM-BEGIN.
+
+           OPEN EXTEND ARQUIVO-CLIENTE
+           MOVE "S" TO RESPOSTA
+
+           PERFORM UNTIL RESPOSTA = "N"
+               PERFORM ADICIONA-REGISTROS
+           END-PERFORM
+
+           CLOSE ARQUIVO-CLIENTE.
+
+       PROGRAM-DONE.
+           STOP RUN.
+
+       ADICIONA-REGISTROS.
+           MOVE SPACES TO CLIENTE-REGISTRO
+           DISPLAY TELA-CADASTRO
+           ACCEPT TELA-CADASTRO
+           WRITE CLIENTE-REGISTRO.

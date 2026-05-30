@@ -1,0 +1,54 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. FAZ_LEITURA_SEQ.
+      *    PROGRAMA PARA LEITURA DE ARQUIVOS.
+       ENVIRONMENT DIVISION.
+
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+           SELECT OPTIONAL ARQUIVO-CLIENTE
+           ASSIGN TO "contato_1.dat"
+           ORGANIZATION IS SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+       FD  ARQUIVO-CLIENTE.
+       01  CLIENTE-REGISTRO.
+           05 CLIENTE-NOME PIC X(25).
+           05 CLIENTE-CELULAR PIC X(20).
+
+       WORKING-STORAGE SECTION.
+       01  FINAL-ARQUIVO PIC X.
+
+       PROCEDURE DIVISION.
+       PROGRAM-BEGIN.
+           PERFORM LIMPA-TELA.
+           PERFORM CABECALHO.
+           OPEN INPUT ARQUIVO-CLIENTE.
+           MOVE "N" TO FINAL-ARQUIVO.
+           PERFORM LEIA-PROXIMO-REGISTRO.
+           PERFORM EXIBA-REGISTROS
+               UNTIL FINAL-ARQUIVO = "S".
+           CLOSE ARQUIVO-CLIENTE.
+       PROGRAM-DONE.
+           STOP RUN.
+
+       LIMPA-TELA.
+           CALL "SYSTEM" USING "CLS".
+
+       CABECALHO.
+           DISPLAY "REGISTROS DO ARQUIVO CLIENTE".
+           DISPLAY "==================================".
+           DISPLAY "".
+
+       LEIA-PROXIMO-REGISTRO.
+           READ ARQUIVO-CLIENTE RECORD AT END
+           MOVE "S" TO FINAL-ARQUIVO.
+
+       EXIBA-REGISTROS.
+           PERFORM EXIBA-CAMPOS.
+           PERFORM LEIA-PROXIMO-REGISTRO.
+
+       EXIBA-CAMPOS.
+           DISPLAY "NOME:" CLIENTE-NOME.
+           DISPLAY "ENDERECO:" CLIENTE-CELULAR.
+           DISPLAY "==========================================".

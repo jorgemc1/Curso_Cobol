@@ -1,0 +1,54 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. TELA2.
+
+       ENVIRONMENT DIVISION.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+
+       01  VAR-NOME        PIC X(20) VALUE SPACES.
+       01  VAR-IDADE-TXT   PIC X(3)  VALUE SPACES.
+       01  VAR-IDADE       PIC 9(3)  VALUE ZEROS.
+       01  MENSAGEM        PIC X(50) VALUE SPACES.
+
+       SCREEN SECTION.
+       01 TELA-ENTRADA.
+           05 BLANK SCREEN.
+           05 LINE 2  COLUMN 10 VALUE "VALIDAÇÃO DE IDADE".
+           05 LINE 4  COLUMN 10 VALUE "NOME...............:".
+           05 LINE 4  COLUMN 32 PIC X(20) USING VAR-NOME.
+           05 LINE 6  COLUMN 10 VALUE "IDADE..............:".
+           05 LINE 6  COLUMN 32 PIC X(3)  USING VAR-IDADE-TXT.
+           05 LINE 8  COLUMN 10 VALUE "Pressione ENTER para continuar.".
+
+       01 TELA-RESULTADO.
+           05 BLANK SCREEN.
+           05 LINE 2  COLUMN 10 VALUE "RESULTADO DA ANÁLISE".
+           05 LINE 4  COLUMN 10 VALUE "NOME...............:".
+           05 LINE 4  COLUMN 32 PIC X(20) FROM VAR-NOME.
+           05 LINE 5  COLUMN 10 VALUE "IDADE..............:".
+           05 LINE 5  COLUMN 32 PIC 9(3) FROM VAR-IDADE.
+           05 LINE 7  COLUMN 10 VALUE "STATUS.............:".
+           05 LINE 7  COLUMN 32 PIC X(50) FROM MENSAGEM.
+           05 LINE 9  COLUMN 10 VALUE "Pressione ENTER para sair.".
+
+       PROCEDURE DIVISION.
+       MAIN-PROGRAM.
+
+           DISPLAY TELA-ENTRADA.
+           ACCEPT TELA-ENTRADA.
+
+           MOVE FUNCTION NUMVAL(VAR-IDADE-TXT) TO VAR-IDADE.
+
+           IF VAR-IDADE < 18
+            MOVE "NÃO PODE TIRAR HABILITAÇÃO PARA VEÍCULOS." TO MENSAGEM
+           ELSE
+            MOVE "PODE TIRAR HABILITAÇÃO PARA VEÍCULOS." TO MENSAGEM
+           END-IF.
+
+           DISPLAY TELA-RESULTADO.
+           ACCEPT TELA-RESULTADO.
+
+           ACCEPT OMITTED LINE 10 COLUMN 10.
+
+           STOP RUN.

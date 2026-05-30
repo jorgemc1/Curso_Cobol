@@ -1,0 +1,14 @@
+# Pastas
+Site Cobol/bin/
+Site Cobol/Arq_indexados/Aula 44 - Escrevendo em Arquivo Indexado - parte 2/
+
+# Arquivos compilados
+*.exe
+*.old_exe
+*.bin
+
+# Documentação
+*.pdf
+
+# Backups do editor
+*~
