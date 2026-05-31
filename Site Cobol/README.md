@@ -5,5 +5,5 @@
 ℹ️ [Site do curso](https://sites.google.com/view/fundamentos-cobol/)
 
 ⚙️ Também temos as pastas:
-    🟦 Arr_indexados
-    🟦 Vetor
+    🟦 Arq_indexados  
+    🟦 Vetor  
